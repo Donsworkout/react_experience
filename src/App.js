@@ -27,6 +27,23 @@ class App extends Component {
     })
   }
 
+  handleUpdate = (id, data) => {
+    const {info} = this.state;
+      this.setState({
+        info: info.map(
+          info => {
+            if (info.id === id) {
+              return {
+                id,
+                ...data,
+              }
+            }
+            return info;
+          }
+        )
+      })
+  }
+
   render() {
     return (
       <fragment>
@@ -35,6 +52,7 @@ class App extends Component {
           <PhoneInfoList 
             data={this.state.info}
             onRemove={this.handleRemove}
+            onUpdate={this.handleUpdate}
           />
         </div>
       </fragment>
