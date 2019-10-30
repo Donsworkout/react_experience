@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
 import PhoneForm from './components/PhoneForm';
-
+import PhoneInfoList from './components/PhoneInfoList'
 
 class App extends Component {
 
+  id = 0;
+
   state = {
-    information: []
+    info: []
   }
 
   handleCreate = (data) => {
-    const {information} = this.state
+    const {info} = this.state
     this.setState({
-      information: information.concat(data)
+      info: info.concat({
+        ...data,
+        id: this.id++
+      })
+    })
+  }
+
+  handleRemove = (id) => {
+    const {info} = this.state;
+    this.setState({
+      info: info.filter(info => info.id !== id)
     })
   }
 
@@ -20,10 +32,10 @@ class App extends Component {
       <fragment>
         <div>
           <PhoneForm onCreate={this.handleCreate}/>
-          <div>
-            목록 : <br/>
-            {JSON.stringify(this.state.information)}
-          </div>
+          <PhoneInfoList 
+            data={this.state.info}
+            onRemove={this.handleRemove}
+          />
         </div>
       </fragment>
     );
